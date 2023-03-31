@@ -14,14 +14,20 @@ class ArticleController extends Controller
         $tag = $request->query('tag');
 
         if (!empty($code)) {
-            $articles = Article::where('code', 'like', '%' . $code . '%')->paginate(20);
-        } else if (!empty($name)) {
-            $articles = Article::where('name', 'like', '%' . $name . '%')->paginate(20);
-        } else if (!empty($tag)) {
-            $tagsIDs = Tag::where('name', 'like', '%' . $tag . '%')->pluck('id')->toArray();
+            $articles = Article::where('code', 'like', '%'.$code.'%')->paginate(20);
+        }
+
+        if (!empty($name)) {
+            $articles = Article::where('name', 'like', '%'.$name.'%')->paginate(20);
+        } 
+
+        if (!empty($tag)) {
+            $tagsIDs = Tag::where('name', 'like', '%'.$tag.'%')->pluck('id')->toArray();
             $articlesIDs = DB::table('article_tag')->whereIn('tag_id', $tagsIDs)->pluck('article_id')->toArray();
             $articles = Article::whereIn('id', $articlesIDs)->paginate(20);
-        } else {
+        } 
+        
+        if (empty($code) and empty($name) and empty($tag)) {
             $articles = DB::table('articles')->paginate(20);
         }
 

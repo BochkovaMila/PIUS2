@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
-//use App\Http\Controllers\ExactArticleController;
+use App\Http\Controllers\ArticleWithCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +19,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/posts', ArticleController::class);
-//Route::controller('/posts/{code}', ExactArticleController::class);
+Route::get('/posts/{code}', ArticleWithCodeController::class);
